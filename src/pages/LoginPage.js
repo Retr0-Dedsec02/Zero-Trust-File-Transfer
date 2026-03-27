@@ -11,12 +11,16 @@ export default function LoginPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!form.email || !form.password) return toast.error("All fields required.");
+    if (!form.email || !form.password) {
+      return toast.error("All fields required.");
+    }
     setLoading(true);
     try {
       await login(form.email, form.password);
       toast.success("Welcome back!");
-      navigate("/dashboard");
+      setTimeout(() => {
+        navigate("/dashboard", { replace: true });
+      }, 100);
     } catch (err) {
       toast.error(err.response?.data?.error || "Login failed.");
     } finally {

@@ -11,14 +11,22 @@ export default function RegisterPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!form.name || !form.email || !form.password) return toast.error("All fields required.");
-    if (form.password.length < 8) return toast.error("Password must be at least 8 characters.");
-    if (form.password !== form.confirm) return toast.error("Passwords do not match.");
+    if (!form.name || !form.email || !form.password) {
+      return toast.error("All fields required.");
+    }
+    if (form.password.length < 8) {
+      return toast.error("Password must be at least 8 characters.");
+    }
+    if (form.password !== form.confirm) {
+      return toast.error("Passwords do not match.");
+    }
     setLoading(true);
     try {
       await register(form.name, form.email, form.password);
       toast.success("Account created! Welcome to VaultShare.");
-      navigate("/dashboard");
+      setTimeout(() => {
+        navigate("/dashboard", { replace: true });
+      }, 100);
     } catch (err) {
       toast.error(err.response?.data?.error || "Registration failed.");
     } finally {
