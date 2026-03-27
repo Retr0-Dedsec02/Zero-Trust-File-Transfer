@@ -68,7 +68,7 @@ export default function DashboardPage() {
     setDownloadingId(file.id);
     try {
       const { data: { signedUrl, iv, salt } } = await api.get(`/files/${file.id}/signed-url`);
-      const response = await fetch(`http://localhost:5000${signedUrl}`);
+      const response = await fetch(signedUrl);
       if (!response.ok) throw new Error("Download failed.");
       const encBuffer = await response.arrayBuffer();
       const decrypted = await decryptFile(encBuffer, password, iv, salt);

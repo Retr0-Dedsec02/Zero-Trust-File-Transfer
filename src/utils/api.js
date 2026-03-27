@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || "http://localhost:5000/api",
+  baseURL: process.env.REACT_APP_API_URL || '/api',
   timeout: 30000,
 });
 
@@ -49,7 +49,7 @@ api.interceptors.response.use(
 
       try {
         const { data } = await axios.post(
-          `${process.env.REACT_APP_API_URL || "http://localhost:5000/api"}/auth/refresh`,
+          `${process.env.REACT_APP_API_URL || '/api'}/auth/refresh`,
           { refreshToken }
         );
         localStorage.setItem("accessToken", data.accessToken);
@@ -70,3 +70,6 @@ api.interceptors.response.use(
 );
 
 export default api;
+
+// Warm up serverless function
+fetch('/api/health').catch(() => {});
